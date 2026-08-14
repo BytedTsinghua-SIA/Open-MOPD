@@ -16,7 +16,7 @@ body {
   overflow-x: hidden;
   color: var(--ink);
   background: var(--paper);
-  font-family: "IBM Plex Mono", "PingFang SC", "SFMono-Regular", Consolas, monospace;
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   font-size: 16px;
   line-height: 1.65;
 }
@@ -43,9 +43,7 @@ figure { margin: 0; }
 }
 .brand { color: var(--ink); font-size: 15px; font-weight: 700; white-space: nowrap; }
 .nav { display: flex; gap: 24px; margin-left: auto; color: var(--muted); font-size: 14px; font-weight: 500; }
-.top-actions { display: flex; align-items: center; gap: 14px; color: var(--ink); font-size: 14px; font-weight: 500; white-space: nowrap; }
-.lang { padding-left: 14px; border-left: 1px solid var(--line); }
-.nav a:hover, .top-actions a:hover, .footer a:hover { color: var(--accent); }
+.nav a:hover, .footer a:hover { color: var(--accent); }
 
 .page-column { width: min(900px, calc(100% - 36px)); margin: 0 auto; }
 .hero { padding: 82px 0 78px; border-bottom: 1px solid var(--line); text-align: center; }
@@ -67,7 +65,53 @@ h1 {
 .hero-affiliation { margin: 7px auto 0; color: #929c99; font-size: 14px; line-height: 1.6; }
 .hero-result { max-width: 780px; margin: 22px auto 0; color: var(--ink); font-size: 17px; line-height: 1.55; }
 .hero-result strong { color: var(--accent); font-weight: 700; }
-.hero-actions, .resource-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 27px; }
+.resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+.resource-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 21px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  color: #202426;
+  box-shadow: 0 2px 5px rgba(27, 46, 44, .08);
+  font-size: 18px;
+  font-weight: 700;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+a.resource-link:hover {
+  border-color: #b8c3c0;
+  box-shadow: 0 4px 10px rgba(27, 46, 44, .11);
+  transform: translateY(-1px);
+}
+.resource-link.is-empty {
+  color: #8b9491;
+  box-shadow: none;
+  cursor: default;
+}
+.resource-icon { width: 25px; height: 25px; flex: 0 0 auto; }
+.resource-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 700;
+}
+.resource-mark-arxiv { color: #77107f; background: #f4eaf6; }
+.resource-mark-model { color: #735900; background: #fff2bd; }
+.resource-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 27px; }
 .button {
   display: inline-flex;
   align-items: center;
@@ -150,7 +194,6 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
 @media (max-width: 700px) {
   .topbar-inner { gap: 16px; width: min(100% - 30px, 600px); }
   .nav { gap: 14px; margin-left: auto; font-size: 12px; }
-  .top-actions { gap: 10px; font-size: 12px; }
   .page-column { width: min(100% - 30px, 600px); }
   .hero { padding: 54px 0 64px; }
   h1 { font-size: clamp(32px, 9vw, 45px); }
@@ -176,6 +219,8 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
   .table-wrap table { min-width: 700px; font-size: 14px; }
   .table-wrap + .table-wrap table { min-width: 560px; }
   .table-wrap caption, .table-note, figcaption { font-size: 13px; }
+  .resource-links { gap: 10px; }
+  .resource-link { min-height: 48px; padding: 0 16px; font-size: 16px; }
   .resource-actions { flex-direction: column; align-items: stretch; }
   .resource-actions .button { width: 100%; }
   .footer { width: min(100% - 30px, 600px); }
@@ -183,7 +228,6 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
 
 @media (max-width: 420px) {
   .nav { display: none; }
-  .top-actions > a:first-child { display: none; }
   .hero-claim, .hero-result { font-size: 15px; }
   .hero-meta, .hero-affiliation { font-size: 13px; }
   .equation { font-size: 15px; }

@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Open-MOPD diagnoses and fixes capability imbalance in multi-teacher on-policy distillation.">
   <title>Open-MOPD · Capability imbalance in multi-teacher OPD</title>
-  <link rel="preconnect" href="https://miaoda.feishu.cn">
-  <link href="https://miaoda.feishu.cn/fonts/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="public/icon.svg">
   <link rel="stylesheet" href="styles.css">
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -18,11 +17,8 @@
         <a href="#method">Method</a>
         <a href="#diagnosis">Diagnosis</a>
         <a href="#results">Results</a>
-        <a href="#bibtex">Paper</a>
+        <a href="#bibtex">Citation</a>
       </nav>
-      <div class="top-actions">
-        <a href="public/Open_MOPD.pdf">PDF ↗</a>
-      </div>
     </div>
   </header>
 
@@ -33,8 +29,19 @@
       <p class="hero-result">Open-MOPD reduces the integration gap from <strong>3.50</strong> to <strong>0.31</strong> points.</p>
       <p class="hero-meta">Anonymous authors · double-blind review manuscript</p>
       <p class="hero-affiliation">SmolLM3-3B-Base · Math · Code · Instruction Following</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="public/Open_MOPD.pdf">Read the paper ↗</a>
+      <div class="resource-links" aria-label="Project resources">
+        <span class="resource-link is-empty" aria-disabled="true" title="arXiv link not available yet">
+          <span class="resource-mark resource-mark-arxiv" aria-hidden="true">X</span>
+          <span>arXiv</span>
+        </span>
+        <a class="resource-link" href="https://github.com/BytedTsinghua-SIA/Open-MOPD" aria-label="Open-MOPD code on GitHub">
+          <svg class="resource-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .7A11.3 11.3 0 0 0 8.4 22.8c.6.1.8-.3.8-.6v-2.2c-3.5.8-4.2-1.5-4.2-1.5-.6-1.5-1.4-1.9-1.4-1.9-1.2-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 3 1.4 3.7 1.1.1-.8.4-1.4.8-1.7-2.8-.3-5.7-1.4-5.7-6.3 0-1.4.5-2.5 1.3-3.4-.1-.3-.6-1.6.1-3.4 0 0 1.1-.3 3.5 1.3a12 12 0 0 1 6.4 0c2.4-1.6 3.5-1.3 3.5-1.3.7 1.8.3 3.1.1 3.4.8.9 1.3 2 1.3 3.4 0 4.9-3 6-5.8 6.3.5.4.9 1.1.9 2.2v3.3c0 .4.2.7.9.6A11.3 11.3 0 0 0 12 .7Z"/></svg>
+          <span>Code</span>
+        </a>
+        <span class="resource-link is-empty" aria-disabled="true" title="Model link not available yet">
+          <span class="resource-mark resource-mark-model" aria-hidden="true">M</span>
+          <span>Models</span>
+        </span>
       </div>
       <figure class="hero-figure">
         <img src="public/assets/integration-gap.png" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
@@ -169,11 +176,10 @@
 
     <section id="bibtex" class="content-section page-column paper-section">
       <div class="section-heading">
-        <h2>Paper and citation</h2>
-        <p>Read the paper or copy the BibTeX citation for this anonymous review manuscript.</p>
+        <h2>Citation</h2>
+        <p>Copy the BibTeX entry for this anonymous review manuscript.</p>
       </div>
       <div class="resource-actions">
-        <a class="button button-primary" href="public/Open_MOPD.pdf">Read the paper ↗</a>
         <button class="button button-ghost" id="copy-bibtex" type="button">Copy BibTeX</button>
       </div>
       <h3 class="bib-label">BibTeX</h3>
