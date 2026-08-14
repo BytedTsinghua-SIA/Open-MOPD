@@ -1,9 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700;800&display=swap");
+
 :root {
   --ink: #1b2e2c;
   --muted: #657471;
   --line: #d8e0dd;
   --paper: #fbfcfb;
   --white: #ffffff;
+  --card: #ffffff;
+  --border: #e2e5e8;
+  --shadow: 0 1px 2px rgba(20, 28, 35, .06);
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --sage: #f0f5ed;
   --lavender: #f2f0fa;
   --accent: #5f4c9c;
@@ -65,39 +71,44 @@ h1 {
 .hero-affiliation { margin: 7px auto 0; color: #929c99; font-size: 14px; line-height: 1.6; }
 .hero-result { max-width: 780px; margin: 22px auto 0; color: var(--ink); font-size: 17px; line-height: 1.55; }
 .hero-result strong { color: var(--accent); font-weight: 700; }
-.resource-links {
+.hero-actions {
   display: flex;
   flex-wrap: wrap;
+  gap: .65rem;
   justify-content: center;
-  gap: 14px;
-  margin-top: 30px;
+  margin: 1.7rem 0 0;
 }
-.resource-link {
+.button {
   display: inline-flex;
+  min-height: 42px;
   align-items: center;
-  gap: 10px;
-  min-height: 54px;
-  padding: 0 21px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--white);
-  color: #202426;
-  box-shadow: 0 2px 5px rgba(27, 46, 44, .08);
-  font-size: 18px;
-  font-weight: 700;
-  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  justify-content: center;
+  gap: .42rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 1.05rem;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
 }
-a.resource-link:hover {
-  border-color: #b8c3c0;
-  box-shadow: 0 4px 10px rgba(27, 46, 44, .11);
+.button:hover {
+  text-decoration: none;
   transform: translateY(-1px);
 }
-.resource-link.is-empty {
+.button em { font-style: normal; }
+.resource-button.is-empty {
   color: #8b9491;
   box-shadow: none;
   cursor: default;
 }
-.resource-icon { width: 25px; height: 25px; flex: 0 0 auto; }
+.resource-button.is-empty:hover {
+  box-shadow: none;
+  transform: none;
+}
+.brand-icon { width: 1.35rem; height: 1.35rem; flex: 0 0 auto; object-fit: contain; }
 .resource-mark {
   display: inline-flex;
   align-items: center;
@@ -111,23 +122,6 @@ a.resource-link:hover {
 }
 .resource-mark-arxiv { color: #77107f; background: #f4eaf6; }
 .resource-mark-model { color: #735900; background: #fff2bd; }
-.resource-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 27px; }
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 16px;
-  border: 1px solid var(--ink);
-  border-radius: 2px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background .18s ease, color .18s ease;
-}
-.button:hover { background: var(--lavender); }
-.button-primary { color: var(--white); background: var(--ink); }
-.button-primary:hover { color: var(--ink); background: var(--lavender); }
-.button-ghost { color: var(--ink); background: transparent; }
 .hero-figure { max-width: 1000px; margin: 52px auto 0; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); box-shadow: 0 2px 8px rgba(27, 46, 44, .05); text-align: left; }
 .hero-figure img { width: 100%; background: var(--white); }
 .hero-explainer { max-width: 960px; margin: 38px auto 0; color: var(--ink); font-size: 17px; line-height: 1.82; text-align: center; text-wrap: pretty; }
@@ -179,16 +173,21 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
 .result-takeaway { max-width: 800px; margin: 42px 0 0; color: var(--ink); font-size: 17px; line-height: 1.7; }
 .result-takeaway strong { color: var(--accent); }
 
-.paper-section { max-width: 820px; padding-top: 64px; padding-bottom: 60px; }
-.paper-section .section-heading h2 { font-size: clamp(30px, 3.6vw, 38px); }
-.paper-section .section-heading > p { margin-top: 14px; }
-.paper-section .resource-actions { justify-content: flex-start; margin-top: 24px; }
-.bib-label { margin-top: 36px; margin-bottom: 12px; font-size: 19px; }
-.bib-box { max-width: 820px; margin-top: 0; border: 1px solid var(--line); background: #f5f6f3; }
-.bib-box pre { margin: 0; overflow-x: auto; padding: 18px 20px; color: var(--ink); font: 14px/1.7 "IBM Plex Mono", monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
-.bib-box code { font: inherit; }
-.toast { position: fixed; right: 18px; bottom: 18px; display: none; padding: 10px 13px; border: 1px solid var(--line); background: var(--white); color: var(--ink); font-size: 13px; }
-.toast.show { display: block; }
+.paper-section { padding-top: 3.2rem; padding-bottom: 3.2rem; }
+.bibtex { margin-top: 0; padding: 0; }
+.bibtex-title { margin: 0 0 .65rem; color: var(--ink); font-weight: 800; }
+.bibtex pre {
+  overflow-x: auto;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  background: #f4f5f6;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: .9rem;
+}
+.bibtex code { font: inherit; }
 .footer { display: flex; justify-content: space-between; width: min(900px, calc(100% - 36px)); margin: 0 auto; padding: 22px 0 30px; color: var(--muted); font-size: 13px; line-height: 1.5; }
 
 @media (max-width: 700px) {
@@ -219,10 +218,7 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
   .table-wrap table { min-width: 700px; font-size: 14px; }
   .table-wrap + .table-wrap table { min-width: 560px; }
   .table-wrap caption, .table-note, figcaption { font-size: 13px; }
-  .resource-links { gap: 10px; }
-  .resource-link { min-height: 48px; padding: 0 16px; font-size: 16px; }
-  .resource-actions { flex-direction: column; align-items: stretch; }
-  .resource-actions .button { width: 100%; }
+  .hero-actions { gap: .65rem; }
   .footer { width: min(100% - 30px, 600px); }
 }
 
@@ -231,7 +227,7 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
   .hero-claim, .hero-result { font-size: 15px; }
   .hero-meta, .hero-affiliation { font-size: 13px; }
   .equation { font-size: 15px; }
-  .bib-box pre { padding: 16px; font-size: 13px; }
+  .bibtex pre { padding: .8rem; font-size: .76rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
