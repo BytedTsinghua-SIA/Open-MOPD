@@ -81,7 +81,8 @@ h1 {
   flex-wrap: wrap;
   gap: .65rem;
   justify-content: center;
-  margin: 1.7rem 0 0;
+  /* The shorter anonymous-author block needs the same visual anchor as Direct-OPD. */
+  margin: 2.606rem 0 0;
 }
 .button {
   display: inline-flex;
@@ -105,12 +106,12 @@ h1 {
 }
 .button em { font-style: normal; }
 .resource-button.is-empty {
-  color: #8b9491;
-  box-shadow: none;
+  color: var(--ink);
+  box-shadow: var(--shadow);
   cursor: default;
 }
 .resource-button.is-empty:hover {
-  box-shadow: none;
+  box-shadow: var(--shadow);
   transform: none;
 }
 .brand-icon { width: 1.35rem; height: 1.35rem; flex: 0 0 auto; object-fit: contain; }
@@ -235,7 +236,7 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
   .table-wrap table { min-width: 700px; font-size: 14px; }
   .table-wrap + .table-wrap table { min-width: 560px; }
   .table-wrap caption, .table-note, figcaption { font-size: 13px; }
-  .hero-actions { gap: .65rem; }
+  .hero-actions { gap: .65rem; margin-top: 1.7rem; }
   .footer { width: min(100% - 30px, 600px); }
 }
 
