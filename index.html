@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open-MOPD diagnoses and fixes capability imbalance in multi-teacher on-policy distillation.">
+  <title>Open-MOPD · Capability imbalance in multi-teacher OPD</title>
+  <link rel="preconnect" href="https://miaoda.feishu.cn">
+  <link href="https://miaoda.feishu.cn/fonts/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">Open-MOPD</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#method">Method</a>
+        <a href="#diagnosis">Diagnosis</a>
+        <a href="#results">Results</a>
+        <a href="#bibtex">Paper</a>
+      </nav>
+      <div class="top-actions">
+        <a href="public/Open_MOPD.pdf">PDF ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero hero-intro-page page-column">
+      <h1><span class="hero-title-dark">Diagnosing and Fixing Capability Imbalance in</span><span class="hero-title-accent">Multi-Teacher On-Policy Distillation</span></h1>
+      <p class="hero-claim">Even with perfect domain routing, multi-teacher OPD loses capability because domains compete for one shared optimization budget.</p>
+      <p class="hero-result">Open-MOPD reduces the integration gap from <strong>3.50</strong> to <strong>0.31</strong> points.</p>
+      <p class="hero-meta">Anonymous authors · double-blind review manuscript</p>
+      <p class="hero-affiliation">SmolLM3-3B-Base · Math · Code · Instruction Following</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="public/Open_MOPD.pdf">Read the paper ↗</a>
+      </div>
+      <figure class="hero-figure">
+        <img src="public/assets/integration-gap.png" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
+        <figcaption>Integration gap: math 1.89 · code 2.45 · IF 6.16 points.</figcaption>
+      </figure>
+      <p class="hero-explainer">Math, code, and instruction-following experts can each gain capability through reinforcement learning, yet their strengths do not simply add up when all three teachers update one shared student. Even with correct hard routing by known domain labels, Naive M-OPD remains below the per-domain RouteOPD reference, with the largest deficit on short instruction-following responses. Open-MOPD traces this integration gap to three measurable optimization-budget problems: realized gradient-token share, the moving teacher–student gap, and stale rewards during repeated inner updates.</p>
+    </section>
+
+    <section id="method" class="content-section page-column">
+      <div class="section-heading">
+        <h2>Method: control the shared student’s optimization budget</h2>
+        <p>In M-OPD, the student first samples its own rollout, and a known domain label routes each trajectory to one frozen teacher. Experiments use SmolLM3-3B-Base, three domain teachers, top-k=16, and K=4 updates per rollout batch.</p>
+      </div>
+
+      <figure class="method-figure">
+        <img src="public/assets/method.png" alt="Pipeline: student rollout, hard route, cached teacher log-probs, dense reward, and PPO">
+        <figcaption>The teacher does not generate demonstrations; it scores states visited by the student.</figcaption>
+      </figure>
+
+      <article class="method-subsection">
+        <h3>The teacher scores states visited by the student</h3>
+        <p>At each visited state \(s_t\), the student keeps only the top-k tokens it actually considers. The routed teacher–student log-probability difference becomes a dense token reward:</p>
+        <div class="equation equation-stack">\[\begin{aligned}
+          S_t &= \operatorname{TopK}\!\left(\pi_\theta(\cdot\mid s_t)\right), \qquad k=16,\\
+          \delta_t(v) &= \operatorname{sg}\!\left[\log\pi_{\phi_{d(x)}}(v\mid s_t)-\log\pi_\theta(v\mid s_t)\right],\\
+          r_t(v) &= \delta_t(v)\,\tilde\pi_\theta(v\mid s_t).
+        \end{aligned}\]</div>
+        <p>The teacher never needs to generate a demonstration; it turns preferences on the student’s current trajectory into a reward for PPO.</p>
+      </article>
+
+      <article class="method-subsection">
+        <h3>The real budget is not the prompt count</h3>
+        <p>The effective update strength for domain \(d\) depends on both its realized token volume and the remaining teacher–student gap:</p>
+        <div class="equation">\[s_d^{\mathrm{tok}}=\frac{n_dL_d}{\sum_j n_jL_j},\qquad B_d\propto s_d^{\mathrm{tok}}\,\bar m_d,\qquad \bar m_d=\mathbb E|r_t|.\]</div>
+        <p>Uniform prompt sampling therefore does not guarantee an equal optimization budget across domains.</p>
+      </article>
+
+      <div class="fix-list">
+        <article class="fix-row">
+          <h3>Token-share balancing</h3>
+          <p>First, reweight the realized token share so that each domain receives one third of the token updates:</p>
+          <div class="equation">\[w_d^{\mathrm{share}}=\frac{g_d^*}{s_d^{\mathrm{tok}}},\qquad g^*=\left(\tfrac13,\tfrac13,\tfrac13\right).\]</div>
+          <p>This directly corrects the response-length bias: short IF responses are no longer systematically ignored because they contribute fewer tokens.</p>
+        </article>
+        <article class="fix-row">
+          <h3>Gap-following allocation</h3>
+          <p>Next, move budget toward domains with a larger teacher–student gap still left to close:</p>
+          <div class="equation">\[\tilde w_d=w_d^{\mathrm{share}}\operatorname{Clamp}\!\left(\left(\frac{\bar m_d}{\bar m_{\mathrm{ref}}}\right)^\alpha,0.05,20\right),\qquad \alpha=1.\]</div>
+          <p>As gaps shrink at different rates, the weights move with them; reversing the direction collapses at step 74.</p>
+        </article>
+        <article class="fix-row">
+          <h3>Reward refresh</h3>
+          <p>Finally, recompute the student-dependent reward before every inner update while caching the frozen teacher log-probabilities once:</p>
+          <div class="equation">\[r_t^{(k)}(v)=\delta_t^{(k)}(v)\,\tilde\pi_\theta^{(k)}(v\mid s_t).\]</div>
+          <p>No additional teacher forward is required. The fix removes student-term staleness, but does not resample the rollout.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="diagnosis" class="content-section page-column">
+      <div class="section-heading">
+        <h2>Diagnosis: three pieces of evidence for budget imbalance</h2>
+        <p>The paper tests teacher conflict first, then measures token share, moving gaps, and reward staleness. Each axis maps to one fix above.</p>
+      </div>
+
+      <article class="evidence-block">
+        <h3>Conflict is measurable, but not the bottleneck</h3>
+        <div class="equation compact-equation">\[c_t=\max_d\log\pi_{\phi_d}(y_t\mid s_t)-\min_d\log\pi_{\phi_d}(y_t\mid s_t)\]</div>
+        <p>Mean disagreement = <strong>0.126 nat</strong>; only <strong>0.62%</strong> of tokens have \(c_t&gt;1\) (3.9% on IF). Masking or consensus lowers total score by <strong>−0.52 to −0.83</strong>.</p>
+        <figure>
+          <img src="public/assets/conflict.png" alt="Teacher conflict distribution and interventions">
+          <figcaption>Conflict is measurable, but not the bottleneck.</figcaption>
+        </figure>
+      </article>
+
+      <article class="evidence-block">
+        <h3>Prompt share is not token share</h3>
+        <p>Prompt share: <strong>39.8 / 39.8 / 20.3%</strong>; gradient-token share: <strong>49.7 / 49.3 / 0.99%</strong> (Math / Code / IF). Math/Code responses are ≈ <strong>10,500</strong> tokens; IF is ≈ <strong>409</strong> tokens. IF needs about <strong>33.6×</strong> oversampling to get one-third of the token budget.</p>
+        <figure>
+          <img src="public/assets/token-share.png" alt="Prompt share versus gradient-token share, including IF oversampling">
+          <figcaption>Count realized update tokens, not just prompts.</figcaption>
+        </figure>
+      </article>
+
+      <article class="evidence-block">
+        <h3>Moving gaps and stale rewards</h3>
+        <p>After flattening token share, IF budget falls from <strong>48.7% → ~9%</strong> in about 25 steps; Code rises from <strong>39.6% → 63.8%</strong>. Rollout reuse makes rewards stale: rollout-current KL is <strong>0.059</strong> at K=4 and <strong>0.216</strong> at K=32; clipped-token fraction reaches <strong>0.86</strong>.</p>
+        <figure>
+          <img src="public/assets/budget-stale-2.png" alt="Teacher-student gap and effective budget drift">
+          <figcaption>Budget drifts with gap shrinkage and inner-update staleness.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="results" class="content-section page-column results-section">
+      <div class="section-heading">
+        <h2>Results: 3.50 points → 0.31</h2>
+        <p>Open-MOPD is one shared student; RouteOPD and RouteRL are domain-routed, non-deployable references. Recovery is RouteRL headroom recovery, not accuracy.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <caption>Main results: Total is the simple mean of the three domain macro-averages over AIME24/25, LiveCodeBench v5/v6, IFEval, and IFBenchtest.</caption>
+          <thead><tr><th>Method</th><th>Math</th><th>Code</th><th>IF</th><th>Total</th><th>Recovery</th></tr></thead>
+          <tbody>
+            <tr><td>Mixed SFT e4</td><td>17.95</td><td>17.60</td><td>41.46</td><td>25.67</td><td>—</td></tr>
+            <tr><td>Naive M-OPD</td><td>21.26</td><td>19.26</td><td>43.64</td><td>28.05</td><td>35.6%</td></tr>
+            <tr class="reference"><td>RouteOPD</td><td>23.15</td><td>21.71</td><td>49.80</td><td>31.55</td><td>88.0%</td></tr>
+            <tr class="ours"><td>Open-MOPD</td><td>22.42</td><td>21.73</td><td>49.58</td><td>31.24</td><td>83.4%</td></tr>
+            <tr class="reference"><td>RouteRL</td><td>24.24</td><td>21.73</td><td>51.08</td><td>32.35</td><td>100%</td></tr>
+          </tbody>
+        </table>
+        <p class="table-note">RouteOPD / RouteRL are true-label, domain-routed references; Open-MOPD is one shared student.</p>
+      </div>
+
+      <div class="table-wrap ablation-table">
+        <table>
+          <caption>Ablation: Total and increment; K=4 rows use a matched-setting control.</caption>
+          <thead><tr><th>Configuration</th><th>K</th><th>Total</th><th>Δ</th></tr></thead>
+          <tbody>
+            <tr><td>Naive M-OPD</td><td>1</td><td>28.05</td><td>—</td></tr>
+            <tr><td>+ token-share</td><td>1</td><td>29.22</td><td>+1.17</td></tr>
+            <tr><td>+ gap-following</td><td>1</td><td>29.94</td><td>+0.72</td></tr>
+            <tr class="reference"><td>Naive matched control</td><td>4</td><td>29.28</td><td>—</td></tr>
+            <tr><td>+ share + gap</td><td>4</td><td>30.43</td><td>+2.38</td></tr>
+            <tr class="ours"><td>Open-MOPD</td><td>4</td><td>31.24</td><td>+3.19</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="result-takeaway">Open-MOPD closes the integration gap from 3.50 to 0.31 points. Recovery rises from 35.6% to 83.4% relative to the RouteRL reference.</p>
+    </section>
+
+    <section id="bibtex" class="content-section page-column paper-section">
+      <div class="section-heading">
+        <h2>Paper and citation</h2>
+        <p>Read the paper or copy the BibTeX citation for this anonymous review manuscript.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="button button-primary" href="public/Open_MOPD.pdf">Read the paper ↗</a>
+        <button class="button button-ghost" id="copy-bibtex" type="button">Copy BibTeX</button>
+      </div>
+      <h3 class="bib-label">BibTeX</h3>
+      <div class="bib-box"><pre><code id="bibtex-code">@misc{openmopd2026,
+  title  = {Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation},
+  year   = {2026},
+  note   = {Review manuscript}
+}</code></pre></div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>Open-MOPD</span><a href="#top">Back to top ↑</a></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite">BibTeX copied</div>
+  <script src="app.js"></script>
+</body>
+</html>
