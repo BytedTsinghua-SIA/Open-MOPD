@@ -23,12 +23,20 @@
   </header>
 
   <main id="top">
-    <section class="hero hero-intro-page page-column">
-      <h1><span class="hero-title-dark">Diagnosing and Fixing Capability Imbalance in</span><span class="hero-title-accent">Multi-Teacher On-Policy Distillation</span></h1>
-      <p class="hero-claim">Even with perfect domain routing, multi-teacher OPD loses capability because domains compete for one shared optimization budget.</p>
-      <p class="hero-result">Open-MOPD reduces the integration gap from <strong>3.50</strong> to <strong>0.31</strong> points.</p>
-      <p class="hero-meta">Anonymous authors · double-blind review manuscript</p>
-      <p class="hero-affiliation">SmolLM3-3B-Base · Math · Code · Instruction Following</p>
+    <section id="hero" class="hero hero-intro-page page-column">
+      <h1>
+        <span class="title-line">Diagnosing and Fixing Capability</span>
+        <span class="title-line">Imbalance in</span>
+        <span class="title-line title-accent">Multi-Teacher On-Policy Distillation</span>
+      </h1>
+      <p class="tagline english">Even with perfect domain routing, multi-teacher OPD loses capability because domains compete for one shared optimization budget.<span class="hero-result">Open-MOPD reduces the integration gap from <strong>3.50</strong> to <strong>0.31</strong> points.</span></p>
+      <p class="authors"><span class="author-line">Anonymous authors</span></p>
+      <div class="affiliations">
+        <p class="author-notes">Paper under double-blind review.</p>
+        <div class="affiliation-list">
+          <p>SmolLM3-3B-Base · Math · Code · Instruction Following</p>
+        </div>
+      </div>
       <div class="hero-actions" aria-label="Project resources">
         <span class="button resource-button is-empty" aria-disabled="true" title="arXiv link not available yet">
           <span class="resource-mark resource-mark-arxiv" aria-hidden="true">X</span>
@@ -43,11 +51,16 @@
           <em>Models</em>
         </span>
       </div>
-      <figure class="hero-figure">
-        <img src="public/assets/integration-gap.png" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
-        <figcaption>Integration gap: math 1.89 · code 2.45 · IF 6.16 points.</figcaption>
-      </figure>
-      <p class="hero-explainer">Math, code, and instruction-following experts can each gain capability through reinforcement learning, yet their strengths do not simply add up when all three teachers update one shared student. Even with correct hard routing by known domain labels, Naive M-OPD remains below the per-domain RouteOPD reference, with the largest deficit on short instruction-following responses. Open-MOPD traces this integration gap to three measurable optimization-budget problems: realized gradient-token share, the moving teacher–student gap, and stale rewards during repeated inner updates.</p>
+    </section>
+
+    <section class="teaser">
+      <div class="page-column">
+        <figure class="paper-figure large">
+          <img src="public/assets/integration-gap.png" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
+          <figcaption>Integration gap: math 1.89 · code 2.45 · IF 6.16 points.</figcaption>
+        </figure>
+        <p class="lead centered">Math, code, and instruction-following experts can each gain capability through reinforcement learning, yet their strengths do not simply add up when all three teachers update one shared student. Even with correct hard routing by known domain labels, Naive M-OPD remains below the per-domain RouteOPD reference, with the largest deficit on short instruction-following responses. Open-MOPD traces this integration gap to three measurable optimization-budget problems: realized gradient-token share, the moving teacher–student gap, and stale rewards during repeated inner updates.</p>
+      </div>
     </section>
 
     <section id="method" class="content-section page-column">
