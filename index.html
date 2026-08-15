@@ -6,7 +6,7 @@
   <meta name="description" content="Open-MOPD diagnoses and fixes capability imbalance in multi-teacher on-policy distillation.">
   <title>Open-MOPD · Capability imbalance in multi-teacher OPD</title>
   <link rel="icon" type="image/svg+xml" href="public/icon.svg">
-  <link rel="stylesheet" href="styles.css?v=97e4316">
+  <link rel="stylesheet" href="styles.css?v=20260815a">
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -56,7 +56,7 @@
     <section class="teaser">
       <div class="page-column">
         <figure class="paper-figure large">
-          <img src="public/assets/integration-gap.png" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
+          <img src="public/assets/integration-gap.png?v=20260815" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
           <figcaption>Integration gap: math 1.89 · code 2.45 · IF 6.16 points.</figcaption>
         </figure>
         <p class="lead centered">Math, code, and instruction-following experts can each gain capability through reinforcement learning, yet their strengths do not simply add up when all three teachers update one shared student. Even with correct hard routing by known domain labels, Naive M-OPD remains below the per-domain RouteOPD reference, with the largest deficit on short instruction-following responses. Open-MOPD traces this integration gap to three measurable optimization-budget problems: realized gradient-token share, the moving teacher–student gap, and stale rewards during repeated inner updates.</p>
@@ -70,7 +70,7 @@
       </div>
 
       <figure class="method-figure">
-        <img src="public/assets/method.png" alt="Pipeline: student rollout, hard route, cached teacher log-probs, dense reward, and PPO">
+        <img src="public/assets/method.png?v=20260815" alt="Pipeline: student rollout, hard route, cached teacher log-probs, dense reward, and PPO">
         <figcaption>The teacher does not generate demonstrations; it scores states visited by the student.</figcaption>
       </figure>
 
@@ -102,8 +102,11 @@
         <article class="fix-row">
           <h3>Gap-following allocation</h3>
           <p>Next, move budget toward domains with a larger teacher–student gap still left to close:</p>
-          <div class="equation">\[\tilde w_d=w_d^{\mathrm{share}}\operatorname{Clamp}\!\left(\left(\frac{\bar m_d}{\bar m_{\mathrm{ref}}}\right)^\alpha,0.05,20\right),\qquad \alpha=1.\]</div>
-          <p>As gaps shrink at different rates, the weights move with them; reversing the direction collapses at step 74.</p>
+          <div class="equation">\[\begin{aligned}
+            \tilde w_d &= w_d^{\mathrm{share}}\operatorname{Clamp}\!\left(\left(\frac{m_d}{m_{\mathrm{ref}}}\right)^\alpha,0.05,20\right),\\
+            w_d^{\mathrm{gap}} &= \frac{\tilde w_d}{\sum_j \tilde w_j s_j^{\mathrm{tok}}}, \qquad \alpha=1.
+          \end{aligned}\]</div>
+          <p>The final normalization keeps the batch loss scale fixed. As gaps shrink at different rates, the weights move with them; reversing the direction collapses at step 74.</p>
         </article>
         <article class="fix-row">
           <h3>Reward refresh</h3>
@@ -117,16 +120,16 @@
     <section id="diagnosis" class="content-section page-column">
       <div class="section-heading">
         <h2>Diagnosis: three pieces of evidence for budget imbalance</h2>
-        <p>The paper tests teacher conflict first, then measures token share, moving gaps, and reward staleness. Each axis maps to one fix above.</p>
+        <p>The paper tests routed-teacher disagreement first, then measures token share, moving gaps, and reward staleness. Each axis maps to one fix above.</p>
       </div>
 
       <article class="evidence-block">
-        <h3>Conflict is measurable, but not the bottleneck</h3>
+        <h3>Teacher disagreement is measurable, but not the bottleneck</h3>
         <div class="equation compact-equation">\[c_t=\max_d\log\pi_{\phi_d}(y_t\mid s_t)-\min_d\log\pi_{\phi_d}(y_t\mid s_t)\]</div>
         <p>Mean disagreement = <strong>0.126 nat</strong>; only <strong>0.62%</strong> of tokens have \(c_t&gt;1\) (3.9% on IF). Masking or consensus lowers total score by <strong>−0.52 to −0.83</strong>.</p>
         <figure>
-          <img src="public/assets/conflict.png" alt="Teacher conflict distribution and interventions">
-          <figcaption>Conflict is measurable, but not the bottleneck.</figcaption>
+          <img src="public/assets/conflict.png?v=20260815" alt="Routed-teacher disagreement distribution and interventions">
+          <figcaption>Teacher disagreement is measurable, but not the bottleneck.</figcaption>
         </figure>
       </article>
 
@@ -134,7 +137,7 @@
         <h3>Prompt share is not token share</h3>
         <p>Prompt share: <strong>39.8 / 39.8 / 20.3%</strong>; gradient-token share: <strong>49.7 / 49.3 / 0.99%</strong> (Math / Code / IF). Math/Code responses are ≈ <strong>10,500</strong> tokens; IF is ≈ <strong>409</strong> tokens. IF needs about <strong>33.6×</strong> oversampling to get one-third of the token budget.</p>
         <figure>
-          <img src="public/assets/token-share.png" alt="Prompt share versus gradient-token share, including IF oversampling">
+          <img src="public/assets/token-share.png?v=20260815" alt="Prompt share versus gradient-token share, including IF oversampling">
           <figcaption>Count realized update tokens, not just prompts.</figcaption>
         </figure>
       </article>
@@ -143,8 +146,8 @@
         <h3>Moving gaps and stale rewards</h3>
         <p>After flattening token share, IF budget falls from <strong>48.7% → ~9%</strong> in about 25 steps; Code rises from <strong>39.6% → 63.8%</strong>. Rollout reuse makes rewards stale: rollout-current KL is <strong>0.059</strong> at K=4 and <strong>0.216</strong> at K=32; clipped-token fraction reaches <strong>0.86</strong>.</p>
         <figure>
-          <img src="public/assets/budget-stale-2.png" alt="Teacher-student gap and effective budget drift">
-          <figcaption>Budget drifts with gap shrinkage and inner-update staleness.</figcaption>
+          <img src="public/assets/budget-stale-2.png?v=20260815" alt="Teacher-student gap shrinkage causes effective budget drift after token-share balancing">
+          <figcaption>Even after token-share balancing, effective budget drifts as domain gaps shrink at different rates.</figcaption>
         </figure>
       </article>
     </section>
@@ -172,13 +175,13 @@
 
       <div class="table-wrap ablation-table">
         <table>
-          <caption>Ablation: Total and increment; K=4 rows use a matched-setting control.</caption>
+          <caption>Ablation: Total and cumulative change from Naive M-OPD; K=4 rows use a matched-setting control.</caption>
           <thead><tr><th>Configuration</th><th>K</th><th>Total</th><th>Δ</th></tr></thead>
           <tbody>
             <tr><td>Naive M-OPD</td><td>1</td><td>28.05</td><td>—</td></tr>
             <tr><td>+ token-share</td><td>1</td><td>29.22</td><td>+1.17</td></tr>
-            <tr><td>+ gap-following</td><td>1</td><td>29.94</td><td>+0.72</td></tr>
-            <tr class="reference"><td>Naive matched control</td><td>4</td><td>29.28</td><td>—</td></tr>
+            <tr><td>+ gap-following</td><td>1</td><td>29.94</td><td>+1.89</td></tr>
+            <tr class="reference"><td>Naive matched control</td><td>4</td><td>29.28</td><td>+1.23</td></tr>
             <tr><td>+ share + gap</td><td>4</td><td>30.43</td><td>+2.38</td></tr>
             <tr class="ours"><td>Open-MOPD</td><td>4</td><td>31.24</td><td>+3.19</td></tr>
           </tbody>

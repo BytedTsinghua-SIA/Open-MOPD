@@ -215,7 +215,7 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
   .hero-result { font-size: .98rem; }
   .teaser { padding-top: 1rem; }
   .paper-figure { margin: 1.2rem 0; padding: .55rem; }
-  .paper-figure figcaption { font-size: .78rem; line-height: 1.55; }
+  .paper-figure figcaption { font-size: 13px; line-height: 1.55; }
   .centered { margin-top: 1.1rem; text-align: left; }
   .content-section { padding: 62px 0 66px; }
   h2 { font-size: 30px; }
@@ -247,7 +247,7 @@ h3 { margin: 0 0 14px; color: var(--ink); font-size: 20px; line-height: 1.35; le
   .hero-result { font-size: .94rem; }
   .affiliations { font-size: .72rem; }
   .equation { font-size: 15px; }
-  .bibtex pre { padding: .8rem; font-size: .76rem; }
+  .bibtex pre { padding: .8rem; font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
