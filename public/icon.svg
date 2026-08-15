@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Open-MOPD">
-  <rect x="3" y="3" width="58" height="58" rx="14" fill="#fbfcfb" stroke="#1b2e2c" stroke-width="4"/>
-  <path d="M17 19v8c0 7 5 12 15 12s15-5 15-12v-8" fill="none" stroke="#5f4c9c" stroke-width="5" stroke-linecap="round"/>
-  <path d="M32 39v10" fill="none" stroke="#1b2e2c" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="17" cy="17" r="3" fill="#1b2e2c"/>
-  <circle cx="32" cy="17" r="3" fill="#1b2e2c"/>
-  <circle cx="47" cy="17" r="3" fill="#1b2e2c"/>
-</svg>
