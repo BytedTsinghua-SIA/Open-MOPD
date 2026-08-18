@@ -3,19 +3,112 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Open-MOPD diagnoses and fixes capability imbalance in multi-teacher on-policy distillation.">
-  <title>Open-MOPD · Capability imbalance in multi-teacher OPD</title>
+  <title>Open-MOPD: Multi-Teacher On-Policy Distillation Recipe</title>
+  <meta name="description" content="Open-MOPD is the first fully open-source multi-teacher on-policy distillation (M-OPD/MOPD) recipe, reducing the capability integration gap from 3.50 to 0.31.">
+  <meta name="keywords" content="Open-MOPD, M-OPD, MOPD, on-policy distillation, on policy distillation, multi-teacher on-policy distillation, multi teacher on policy distillation, multi-teacher distillation, capability integration, model distillation">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="author" content="Huan-ang Gao, Haohan Chi, Yong Yan, Shiyuan Feng, Hanlin Wu, Zheng Jiang, Bingxiang He, Wei-Ying Ma, Ya-Qin Zhang, Hao Zhou">
+  <link rel="canonical" href="https://bytedtsinghua-sia.github.io/Open-MOPD/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Open-MOPD">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://bytedtsinghua-sia.github.io/Open-MOPD/">
+  <meta property="og:title" content="Open-MOPD: Multi-Teacher On-Policy Distillation Recipe">
+  <meta property="og:description" content="The first fully open-source multi-teacher on-policy distillation (M-OPD/MOPD) recipe, with models, data, training stages, diagnosis, and results.">
+  <meta property="og:image" content="https://bytedtsinghua-sia.github.io/Open-MOPD/public/assets/integration-gap.png">
+  <meta property="og:image:alt" content="Open-MOPD capability integration gap results across Math, Code, and Instruction Following">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Open-MOPD: Multi-Teacher On-Policy Distillation Recipe">
+  <meta name="twitter:description" content="The first fully open-source multi-teacher on-policy distillation (M-OPD/MOPD) recipe.">
+  <meta name="twitter:image" content="https://bytedtsinghua-sia.github.io/Open-MOPD/public/assets/integration-gap.png">
+
+  <meta name="citation_title" content="Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation">
+  <meta name="citation_author" content="Gao, Huan-ang">
+  <meta name="citation_author" content="Chi, Haohan">
+  <meta name="citation_author" content="Yan, Yong">
+  <meta name="citation_author" content="Feng, Shiyuan">
+  <meta name="citation_author" content="Wu, Hanlin">
+  <meta name="citation_author" content="Jiang, Zheng">
+  <meta name="citation_author" content="He, Bingxiang">
+  <meta name="citation_author" content="Ma, Wei-Ying">
+  <meta name="citation_author" content="Zhang, Ya-Qin">
+  <meta name="citation_author" content="Zhou, Hao">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_journal_title" content="arXiv preprint">
+
   <link rel="icon" type="image/png" href="public/icon.png?v=20260815b">
-  <link rel="stylesheet" href="styles.css?v=20260815a">
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="styles.css?v=20260818d">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://bytedtsinghua-sia.github.io/Open-MOPD/#website",
+        "url": "https://bytedtsinghua-sia.github.io/Open-MOPD/",
+        "name": "Open-MOPD",
+        "alternateName": ["M-OPD", "MOPD"],
+        "inLanguage": "en"
+      },
+      {
+        "@type": "ScholarlyArticle",
+        "@id": "https://bytedtsinghua-sia.github.io/Open-MOPD/#paper",
+        "url": "https://bytedtsinghua-sia.github.io/Open-MOPD/",
+        "name": "Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation",
+        "headline": "Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation",
+        "alternativeHeadline": "The First Fully Open-Source Multi-Teacher On-Policy Distillation (M-OPD/MOPD) Recipe",
+        "description": "Open-MOPD is a fully open-source recipe for consolidating multiple domain RL teachers into one student through multi-teacher on-policy distillation.",
+        "datePublished": "2026",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "image": "https://bytedtsinghua-sia.github.io/Open-MOPD/public/assets/integration-gap.png",
+        "keywords": [
+          "Open-MOPD",
+          "M-OPD",
+          "MOPD",
+          "on-policy distillation",
+          "on policy distillation",
+          "multi-teacher on-policy distillation",
+          "multi teacher on policy distillation",
+          "multi-teacher distillation",
+          "capability integration"
+        ],
+        "about": [
+          {"@type": "Thing", "name": "On-policy distillation", "alternateName": "On policy distillation"},
+          {"@type": "Thing", "name": "Multi-teacher on-policy distillation", "alternateName": ["M-OPD", "MOPD"]},
+          {"@type": "Thing", "name": "Model distillation"}
+        ],
+        "author": [
+          {"@type": "Person", "name": "Huan-ang Gao"},
+          {"@type": "Person", "name": "Haohan Chi"},
+          {"@type": "Person", "name": "Yong Yan"},
+          {"@type": "Person", "name": "Shiyuan Feng"},
+          {"@type": "Person", "name": "Hanlin Wu"},
+          {"@type": "Person", "name": "Zheng Jiang"},
+          {"@type": "Person", "name": "Bingxiang He"},
+          {"@type": "Person", "name": "Wei-Ying Ma"},
+          {"@type": "Person", "name": "Ya-Qin Zhang"},
+          {"@type": "Person", "name": "Hao Zhou"}
+        ],
+        "sameAs": [
+          "https://github.com/BytedTsinghua-SIA/Open-MOPD",
+          "https://huggingface.co/collections/BytedTsinghua-SIA/open-mopd-multi-teacher-on-policy-distillation"
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="#top">Open-MOPD</a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="#method">Method</a>
+        <a href="#recipe">Recipe</a>
         <a href="#diagnosis">Diagnosis</a>
+        <a href="#method">Method</a>
         <a href="#results">Results</a>
         <a href="#bibtex">Citation</a>
       </nav>
@@ -25,17 +118,26 @@
   <main id="top">
     <section id="hero" class="hero hero-intro-page page-column">
       <h1>
-        <span class="title-line">Diagnosing and Fixing Capability</span>
-        <span class="title-line">Imbalance in</span>
-        <span class="title-line title-accent">Multi-Teacher On-Policy Distillation</span>
+        <span class="title-project">Open-MOPD</span>
+        <span class="title-line title-subtitle">Diagnosing and Fixing Capability Imbalance in</span>
+        <span class="title-line title-subtitle title-accent">Multi-Teacher On-Policy Distillation</span>
       </h1>
-      <p class="tagline english">Even with perfect domain routing, multi-teacher OPD loses capability because domains compete for one shared optimization budget.<span class="hero-result">Open-MOPD reduces the integration gap from <strong>3.50</strong> to <strong>0.31</strong> points.</span></p>
-      <p class="authors"><span class="author-line">Anonymous authors</span></p>
+      <div class="hero-claims" aria-label="Key contributions">
+        <p class="hero-claim">We introduce the first <strong class="open-source-emphasis">fully open-source</strong> recipe for multi-teacher on-policy distillation.</p>
+        <p class="hero-claim hero-claim-performance">Open-MOPD reduces the integration gap from <strong>3.50</strong> to <strong>0.31</strong> points in one shared student.</p>
+      </div>
+      <p class="authors">
+        <span class="author-line">Huan-ang Gao<sup>*,1,2,3</sup>, Haohan Chi<sup>*,1,2,3</sup>, Yong Yan<sup>1,2,3</sup></span>
+        <span class="author-line">Shiyuan Feng<sup>1,2</sup>, Hanlin Wu<sup>1,2</sup>, Zheng Jiang<sup>3</sup>, Bingxiang He<sup>3</sup></span>
+        <span class="author-line">Wei-Ying Ma<sup>1,2</sup>, Ya-Qin Zhang<sup>1,2</sup>, Hao Zhou<sup>1,2,†</sup></span>
+      </p>
       <div class="affiliations">
-        <p class="author-notes">Paper under double-blind review.</p>
         <div class="affiliation-list">
-          <p>SmolLM3-3B-Base · Math · Code · Instruction Following</p>
+          <p><sup>1</sup>SIA-Lab of Tsinghua AIR and ByteDance Seed</p>
+          <p><sup>2</sup>Institute for AI Industry Research (AIR), Tsinghua University</p>
+          <p><sup>3</sup>Department of Computer Science and Technology, Tsinghua University</p>
         </div>
+        <p class="author-notes"><sup>*</sup>Equal contribution · <sup>‡</sup>Project Lead · <sup>†</sup>Corresponding author</p>
       </div>
       <div class="hero-actions" aria-label="Project resources">
         <span class="button resource-button is-empty" aria-disabled="true" title="arXiv link not available yet">
@@ -46,87 +148,174 @@
           <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .7A11.3 11.3 0 0 0 8.4 22.8c.6.1.8-.3.8-.6v-2.2c-3.5.8-4.2-1.5-4.2-1.5-.6-1.5-1.4-1.9-1.4-1.9-1.2-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 3 1.4 3.7 1.1.1-.8.4-1.4.8-1.7-2.8-.3-5.7-1.4-5.7-6.3 0-1.4.5-2.5 1.3-3.4 0 0-.6-1.6.1-3.4 0 0 1.1-.3 3.5 1.3a12 12 0 0 1 6.4 0c2.4-1.6 3.5-1.3 3.5-1.3.7 1.8.3 3.1.1 3.4.8.9 1.3 2 1.3 3.4 0 4.9-3 6-5.8 6.3.5.4.9 1.1.9 2.2v3.3c0 .4.2.7.9.6A11.3 11.3 0 0 0 12 .7Z"/></svg>
           <em>Code</em>
         </a>
-        <span class="button resource-button is-empty" aria-disabled="true" title="Model link not available yet">
+        <a class="button resource-button" href="https://huggingface.co/collections/BytedTsinghua-SIA/open-mopd-multi-teacher-on-policy-distillation" target="_blank" rel="noreferrer" aria-label="Open-MOPD models and datasets on Hugging Face">
           <img class="brand-icon" src="https://huggingface.co/favicon.ico" alt="">
-          <em>Models</em>
-        </span>
+          <em>Models &amp; Data</em>
+        </a>
       </div>
     </section>
 
-    <section class="teaser">
-      <div class="page-column">
-        <figure class="paper-figure large">
-          <img src="public/assets/integration-gap.png?v=20260815" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
-          <figcaption>Integration gap: math 1.89 · code 2.45 · IF 6.16 points.</figcaption>
-        </figure>
-        <p class="lead centered">Math, code, and instruction-following experts can each gain capability through reinforcement learning, yet their strengths do not simply add up when all three teachers update one shared student. Even with correct hard routing by known domain labels, Naive M-OPD remains below the per-domain RouteOPD reference, with the largest deficit on short instruction-following responses. Open-MOPD traces this integration gap to three measurable optimization-budget problems: realized gradient-token share, the moving teacher–student gap, and stale rewards during repeated inner updates.</p>
-      </div>
-    </section>
-
-    <section id="method" class="content-section page-column">
+    <section id="recipe" class="content-section recipe-section page-column">
       <div class="section-heading">
-        <h2>Method: control the shared student’s optimization budget</h2>
-        <p>In M-OPD, the student first samples its own rollout, and a known domain label routes each trajectory to one frozen teacher. Experiments use SmolLM3-3B-Base, three domain teachers, top-k=16, and K=4 updates per rollout batch.</p>
+        <h2>The first fully open-source multi-teacher on-policy distillation (MOPD) recipe</h2>
+        <p class="recipe-thesis">Open-MOPD specifies the complete path from a public base model to one unified student: mixed-domain supervised fine-tuning, three independently trained domain RL teachers, and hard-routed multi-teacher on-policy distillation, together with the datasets, training settings, checkpoints, and evaluation suite. The recipe balances two constraints. <strong>Model capacity</strong> must be high enough to close long reasoning trajectories, otherwise truncation confounds the diagnosis; <strong>experimental feasibility</strong> must remain low-cost enough to repeat the full pipeline and its mechanism ablations. SmolLM3-3B-Base is selected as the operating point between an under-capable 1.7B screen and a capable but substantially more expensive 7B screen.</p>
       </div>
 
-      <figure class="method-figure">
-        <img src="public/assets/method.png?v=20260815" alt="Pipeline: student rollout, hard route, cached teacher log-probs, dense reward, and PPO">
-        <figcaption>The teacher does not generate demonstrations; it scores states visited by the student.</figcaption>
+      <div class="recipe-diagram">
+        <svg class="recipe-svg recipe-svg-desktop" viewBox="0 0 1120 390" role="img" aria-labelledby="recipe-desktop-title recipe-desktop-desc">
+          <title id="recipe-desktop-title">The Open-MOPD training recipe</title>
+          <desc id="recipe-desktop-desc">SmolLM3-3B-Base is supervised fine-tuned into MixSFT. MixSFT trains three domain RL teachers and initializes the Open-MOPD student through a dashed path. RL-Math, RL-Code, and RL-IF jointly teach the final student.</desc>
+          <defs>
+            <marker id="recipe-arrow-neutral-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#77808a"/></marker>
+            <marker id="recipe-arrow-accent-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#660874"/></marker>
+          </defs>
+
+          <path class="recipe-edge" d="M190 210H268" marker-end="url(#recipe-arrow-neutral-d)"/>
+          <path class="recipe-edge recipe-edge-math" d="M504 210H554V69H627" marker-end="url(#recipe-arrow-neutral-d)"/>
+          <path class="recipe-edge recipe-edge-code" d="M504 210H627" marker-end="url(#recipe-arrow-neutral-d)"/>
+          <path class="recipe-edge recipe-edge-if" d="M504 210H554V321H627" marker-end="url(#recipe-arrow-neutral-d)"/>
+          <path class="recipe-edge recipe-edge-math" d="M873 69H908V210"/>
+          <path class="recipe-edge recipe-edge-if" d="M873 321H908V210"/>
+          <path class="recipe-edge recipe-edge-merge" d="M873 210H940" marker-end="url(#recipe-arrow-accent-d)"/>
+          <path class="recipe-edge recipe-edge-init" d="M386 140V22H1020V124" marker-end="url(#recipe-arrow-accent-d)"/>
+          <text class="recipe-edge-label recipe-init-label" x="703" y="14">init.</text>
+          <text class="recipe-edge-label" x="907" y="194">teachers</text>
+
+          <g class="recipe-svg-node">
+            <rect class="recipe-card" x="0" y="158" width="190" height="104" rx="8"/>
+            <text class="recipe-node-label" x="16" y="180">BASE MODEL</text>
+            <text class="recipe-node-title" x="16" y="209">SmolLM3-3B-Base</text>
+            <text class="recipe-node-copy" x="16" y="235">Fully open · 3B · 64K context</text>
+          </g>
+          <g class="recipe-svg-node">
+            <rect class="recipe-card" x="268" y="140" width="236" height="140" rx="8"/>
+            <text class="recipe-node-label" x="284" y="162">STAGE I</text>
+            <text class="recipe-node-title" x="284" y="191">MixSFT</text>
+            <text class="recipe-node-copy" x="284" y="216">Math · OpenR1-Math-93k</text>
+            <text class="recipe-node-copy" x="284" y="237">Code · OCR-50k</text>
+            <text class="recipe-node-copy" x="284" y="258">IF · Instruction-Nemotron</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-math">
+            <rect class="recipe-card" x="627" y="25" width="246" height="88" rx="8"/>
+            <rect class="recipe-domain-bar" x="627" y="25" width="3" height="88" rx="2"/>
+            <text class="recipe-node-label" x="643" y="45">STAGE II · TEACHER</text>
+            <text class="recipe-node-title recipe-teacher-title" x="643" y="70">RL-Math</text>
+            <text class="recipe-node-copy" x="643" y="93">DAPO-Math-17k</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-code">
+            <rect class="recipe-card" x="627" y="166" width="246" height="88" rx="8"/>
+            <rect class="recipe-domain-bar" x="627" y="166" width="3" height="88" rx="2"/>
+            <text class="recipe-node-label" x="643" y="186">STAGE II · TEACHER</text>
+            <text class="recipe-node-title recipe-teacher-title" x="643" y="211">RL-Code</text>
+            <text class="recipe-node-copy" x="643" y="234">DeepScaler-24k</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-if">
+            <rect class="recipe-card" x="627" y="277" width="246" height="88" rx="8"/>
+            <rect class="recipe-domain-bar" x="627" y="277" width="3" height="88" rx="2"/>
+            <text class="recipe-node-label" x="643" y="297">STAGE II · TEACHER</text>
+            <text class="recipe-node-title recipe-teacher-title" x="643" y="322">RL-IF</text>
+            <text class="recipe-node-copy" x="643" y="345">Nemotron-IF-RL-46k</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-open">
+            <rect class="recipe-card recipe-card-open" x="940" y="124" width="180" height="172" rx="8"/>
+            <text class="recipe-node-label" x="956" y="146">STAGE III</text>
+            <text class="recipe-node-title" x="956" y="175">Open-MOPD</text>
+            <text class="recipe-node-copy" x="956" y="199">Token-share balance</text>
+            <text class="recipe-node-copy" x="956" y="220">Gap-following allocation</text>
+            <text class="recipe-node-copy" x="956" y="241">Reward refresh</text>
+            <line class="recipe-card-divider" x1="956" y1="257" x2="1104" y2="257"/>
+            <text class="recipe-node-output" x="956" y="280">One unified student</text>
+          </g>
+        </svg>
+
+        <svg class="recipe-svg recipe-svg-mobile" viewBox="0 0 390 880" role="img" aria-labelledby="recipe-mobile-title recipe-mobile-desc">
+          <title id="recipe-mobile-title">The Open-MOPD training recipe</title>
+          <desc id="recipe-mobile-desc">A mobile vertical layout of the same recipe: base model, MixSFT, three domain RL teachers, and one Open-MOPD student.</desc>
+          <defs>
+            <marker id="recipe-arrow-neutral-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#77808a"/></marker>
+            <marker id="recipe-arrow-accent-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#660874"/></marker>
+          </defs>
+
+          <path class="recipe-edge" d="M195 110V145" marker-end="url(#recipe-arrow-neutral-m)"/>
+          <path class="recipe-edge recipe-edge-math" d="M35 215H16V380H35" marker-end="url(#recipe-arrow-neutral-m)"/>
+          <path class="recipe-edge recipe-edge-code" d="M35 215H16V495H35" marker-end="url(#recipe-arrow-neutral-m)"/>
+          <path class="recipe-edge recipe-edge-if" d="M35 215H16V610H35" marker-end="url(#recipe-arrow-neutral-m)"/>
+          <path class="recipe-edge recipe-edge-math" d="M355 380H374V800"/>
+          <path class="recipe-edge recipe-edge-code" d="M355 495H374"/>
+          <path class="recipe-edge recipe-edge-if" d="M355 610H374"/>
+          <path class="recipe-edge recipe-edge-merge" d="M374 800H355" marker-end="url(#recipe-arrow-accent-m)"/>
+          <path class="recipe-edge recipe-edge-init" d="M355 250H383V750H355" marker-end="url(#recipe-arrow-accent-m)"/>
+          <text class="recipe-edge-label recipe-init-label" x="373" y="325" transform="rotate(90 373 325)">init.</text>
+          <text class="recipe-edge-label" x="365" y="700" transform="rotate(90 365 700)">teachers</text>
+
+          <g class="recipe-svg-node">
+            <rect class="recipe-card" x="35" y="20" width="320" height="90" rx="8"/>
+            <text class="recipe-node-label" x="53" y="43">BASE MODEL</text>
+            <text class="recipe-node-title" x="53" y="72">SmolLM3-3B-Base</text>
+            <text class="recipe-node-copy" x="53" y="96">Fully open · 3B · 64K context</text>
+          </g>
+          <g class="recipe-svg-node">
+            <rect class="recipe-card" x="35" y="145" width="320" height="140" rx="8"/>
+            <text class="recipe-node-label" x="53" y="168">STAGE I</text>
+            <text class="recipe-node-title" x="53" y="197">MixSFT</text>
+            <text class="recipe-node-copy" x="53" y="222">Math · OpenR1-Math-93k</text>
+            <text class="recipe-node-copy" x="53" y="243">Code · OCR-50k</text>
+            <text class="recipe-node-copy" x="53" y="264">IF · Instruction-Nemotron</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-math">
+            <rect class="recipe-card" x="35" y="340" width="320" height="80" rx="8"/>
+            <rect class="recipe-domain-bar" x="35" y="340" width="3" height="80" rx="2"/>
+            <text class="recipe-node-label" x="53" y="361">STAGE II · TEACHER</text>
+            <text class="recipe-node-title recipe-teacher-title" x="53" y="386">RL-Math</text>
+            <text class="recipe-node-copy" x="190" y="386">DAPO-Math-17k</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-code">
+            <rect class="recipe-card" x="35" y="455" width="320" height="80" rx="8"/>
+            <rect class="recipe-domain-bar" x="35" y="455" width="3" height="80" rx="2"/>
+            <text class="recipe-node-label" x="53" y="476">STAGE II · TEACHER</text>
+            <text class="recipe-node-title recipe-teacher-title" x="53" y="501">RL-Code</text>
+            <text class="recipe-node-copy" x="190" y="501">DeepScaler-24k</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-if">
+            <rect class="recipe-card" x="35" y="570" width="320" height="80" rx="8"/>
+            <rect class="recipe-domain-bar" x="35" y="570" width="3" height="80" rx="2"/>
+            <text class="recipe-node-label" x="53" y="591">STAGE II · TEACHER</text>
+            <text class="recipe-node-title recipe-teacher-title" x="53" y="616">RL-IF</text>
+            <text class="recipe-node-copy" x="190" y="616">Nemotron-IF-RL-46k</text>
+          </g>
+          <g class="recipe-svg-node recipe-svg-node-open">
+            <rect class="recipe-card recipe-card-open" x="35" y="735" width="320" height="135" rx="8"/>
+            <text class="recipe-node-label" x="53" y="758">STAGE III</text>
+            <text class="recipe-node-title" x="53" y="787">Open-MOPD</text>
+            <text class="recipe-node-copy" x="53" y="812">Token-share balance · Gap-following allocation</text>
+            <text class="recipe-node-copy" x="53" y="833">Reward refresh</text>
+            <line class="recipe-card-divider" x1="53" y1="845" x2="337" y2="845"/>
+            <text class="recipe-node-output" x="53" y="863">One unified student</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section id="preliminary" class="content-section preliminary-section page-column">
+      <div class="section-heading">
+        <h2>Preliminary Naive MOPD Results</h2>
+      </div>
+      <figure class="paper-figure large">
+        <img src="public/assets/integration-gap.png?v=20260815" alt="Naive M-OPD versus RouteOPD: math gap 1.89, code gap 2.45, and IF gap 6.16 points">
+        <figcaption>Integration gap: math 1.89 · code 2.45 · IF 6.16 points.</figcaption>
       </figure>
-
-      <article class="method-subsection">
-        <h3>The teacher scores states visited by the student</h3>
-        <p>At each visited state \(s_t\), the student keeps only the top-k tokens it actually considers. The routed teacher–student log-probability difference becomes a dense token reward:</p>
-        <div class="equation equation-stack">\[\begin{aligned}
-          S_t &= \operatorname{TopK}\!\left(\pi_\theta(\cdot\mid s_t)\right), \qquad k=16,\\
-          \delta_t(v) &= \operatorname{sg}\!\left[\log\pi_{\phi_{d(x)}}(v\mid s_t)-\log\pi_\theta(v\mid s_t)\right],\\
-          r_t(v) &= \delta_t(v)\,\tilde\pi_\theta(v\mid s_t).
-        \end{aligned}\]</div>
-        <p>The teacher never needs to generate a demonstration; it turns preferences on the student’s current trajectory into a reward for PPO.</p>
-      </article>
-
-      <article class="method-subsection">
-        <h3>The real budget is not the prompt count</h3>
-        <p>The effective update strength for domain \(d\) depends on both its realized token volume and the remaining teacher–student gap:</p>
-        <div class="equation">\[s_d^{\mathrm{tok}}=\frac{n_dL_d}{\sum_j n_jL_j},\qquad B_d\propto s_d^{\mathrm{tok}}\,\bar m_d,\qquad \bar m_d=\mathbb E|r_t|.\]</div>
-        <p>Uniform prompt sampling therefore does not guarantee an equal optimization budget across domains.</p>
-      </article>
-
-      <div class="fix-list">
-        <article class="fix-row">
-          <h3>Token-share balancing</h3>
-          <p>First, reweight the realized token share so that each domain receives one third of the token updates:</p>
-          <div class="equation">\[w_d^{\mathrm{share}}=\frac{g_d^*}{s_d^{\mathrm{tok}}},\qquad g^*=\left(\tfrac13,\tfrac13,\tfrac13\right).\]</div>
-          <p>This directly corrects the response-length bias: short IF responses are no longer systematically ignored because they contribute fewer tokens.</p>
-        </article>
-        <article class="fix-row">
-          <h3>Gap-following allocation</h3>
-          <p>Next, move budget toward domains with a larger teacher–student gap still left to close:</p>
-          <div class="equation">\[\begin{aligned}
-            \tilde w_d &= w_d^{\mathrm{share}}\operatorname{Clamp}\!\left(\left(\frac{m_d}{m_{\mathrm{ref}}}\right)^\alpha,0.05,20\right),\\
-            w_d^{\mathrm{gap}} &= \frac{\tilde w_d}{\sum_j \tilde w_j s_j^{\mathrm{tok}}}, \qquad \alpha=1.
-          \end{aligned}\]</div>
-          <p>The final normalization keeps the batch loss scale fixed. As gaps shrink at different rates, the weights move with them; reversing the direction collapses at step 74.</p>
-        </article>
-        <article class="fix-row">
-          <h3>Reward refresh</h3>
-          <p>Finally, recompute the student-dependent reward before every inner update while caching the frozen teacher log-probabilities once:</p>
-          <div class="equation">\[r_t^{(k)}(v)=\delta_t^{(k)}(v)\,\tilde\pi_\theta^{(k)}(v\mid s_t).\]</div>
-          <p>No additional teacher forward is required. The fix removes student-term staleness, but does not resample the rollout.</p>
-        </article>
-      </div>
+      <p class="lead centered">Math, code, and instruction-following experts can each gain capability through reinforcement learning, yet their strengths do not simply add up when all three teachers update one shared student. Even with correct hard routing by known domain labels, Naive M-OPD remains below the per-domain RouteOPD reference, with the largest deficit on short instruction-following responses.</p>
     </section>
 
     <section id="diagnosis" class="content-section page-column">
       <div class="section-heading">
-        <h2>Diagnosis: three pieces of evidence for budget imbalance</h2>
-        <p>The paper tests routed-teacher disagreement first, then measures token share, moving gaps, and reward staleness. Each axis maps to one fix above.</p>
+        <h2>Diagnosing the Problems</h2>
+        <p>The paper tests routed-teacher disagreement first, then measures the two sources of optimization-budget imbalance: response-token share and the moving teacher–student gap under stale rewards.</p>
       </div>
 
       <article class="evidence-block">
         <h3>Teacher disagreement is measurable, but not the bottleneck</h3>
-        <div class="equation compact-equation">\[c_t=\max_d\log\pi_{\phi_d}(y_t\mid s_t)-\min_d\log\pi_{\phi_d}(y_t\mid s_t)\]</div>
-        <p>Mean disagreement = <strong>0.126 nat</strong>; only <strong>0.62%</strong> of tokens have \(c_t&gt;1\) (3.9% on IF). Masking or consensus lowers total score by <strong>−0.52 to −0.83</strong>.</p>
+        <p>For each generated token, teacher disagreement is the difference between the highest and lowest teacher log-probability assigned to that token. Mean disagreement is <strong>0.126 nat</strong>; only <strong>0.62%</strong> of tokens exceed 1 nat (3.9% on IF). Masking high-disagreement tokens or replacing their signal with teacher consensus lowers the total score by <strong>−0.52 to −0.83</strong>.</p>
         <figure>
           <img src="public/assets/conflict.png?v=20260815" alt="Routed-teacher disagreement distribution and interventions">
           <figcaption>Teacher disagreement is measurable, but not the bottleneck.</figcaption>
@@ -138,65 +327,173 @@
         <p>Prompt share: <strong>39.8 / 39.8 / 20.3%</strong>; gradient-token share: <strong>49.7 / 49.3 / 0.99%</strong> (Math / Code / IF). Math/Code responses are ≈ <strong>10,500</strong> tokens; IF is ≈ <strong>409</strong> tokens. IF needs about <strong>33.6×</strong> oversampling to get one-third of the token budget.</p>
         <figure>
           <img src="public/assets/token-share.png?v=20260815" alt="Prompt share versus gradient-token share, including IF oversampling">
-          <figcaption>Count realized update tokens, not just prompts.</figcaption>
+          <figcaption>Prompt frequency does not determine each domain’s share of gradient tokens.</figcaption>
         </figure>
       </article>
 
       <article class="evidence-block">
-        <h3>Moving gaps and stale rewards</h3>
-        <p>After flattening token share, IF budget falls from <strong>48.7% → ~9%</strong> in about 25 steps; Code rises from <strong>39.6% → 63.8%</strong>. Rollout reuse makes rewards stale: rollout-current KL is <strong>0.059</strong> at K=4 and <strong>0.216</strong> at K=32; clipped-token fraction reaches <strong>0.86</strong>.</p>
+        <h3>Moving teacher–student gaps make the budget drift</h3>
+        <p>We estimate a domain’s training budget as its number of response tokens multiplied by the average absolute reward per token. Panel (c) below reports each domain’s percentage of the total budget; because this run gives all three domains the same number of tokens, the percentages are determined only by reward strength. As the teacher–student gaps close at different speeds, IF’s share falls from <strong>48.7% to about 9%</strong> within 25 steps, while Code rises from <strong>39.6% to 63.8%</strong>.</p>
         <figure>
           <img src="public/assets/budget-stale-2.png?v=20260815" alt="Teacher-student gap shrinkage causes effective budget drift after token-share balancing">
           <figcaption>Even after token-share balancing, effective budget drifts as domain gaps shrink at different rates.</figcaption>
         </figure>
+      </article>
+
+      <article class="evidence-block">
+        <h3>Repeated inner updates make rewards stale</h3>
+        <p>Consolidating three domains into one student requires a sufficiently large mixed-domain rollout batch to estimate and balance the Math, Code, and IF token budgets. This large batch is partitioned into multiple PPO minibatch updates. The trajectories are on-policy when sampled, but the student changes after each update while the frozen teacher does not; consequently, a dense reward computed with rollout-time student probabilities becomes inconsistent with the current policy. Rollout-to-current KL reaches <strong>0.059</strong> at K=4 and <strong>0.216</strong> at K=32; the clipped-token fraction reaches <strong>0.86</strong>.</p>
+        <figure class="stale-reward-figure">
+          <img src="public/assets/stale-reward.png?v=20260818" alt="Rollout-to-current KL and PPO clipped-token fraction increase with the number of inner updates">
+          <figcaption>As inner updates accumulate, the student moves away from the rollout policy and the cached reward becomes stale.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="method" class="content-section page-column">
+      <div class="section-heading">
+        <h2>Method: Open-MOPD</h2>
+        <p>Open-MOPD keeps hard teacher routing and the on-policy distillation objective, but explicitly controls how much update budget each domain receives and refreshes the student-dependent reward before every inner update.</p>
+      </div>
+
+      <figure class="method-figure">
+        <img src="public/assets/method.png?v=20260815" alt="Open-MOPD pipeline: student rollout, hard routing, cached teacher log-probabilities, dense reward, and PPO updates">
+        <figcaption>The teacher scores states visited by the student; it does not generate demonstrations.</figcaption>
+      </figure>
+
+      <article class="algorithm-block" aria-labelledby="algorithm-title">
+        <header class="algorithm-header">
+          <span>Algorithm 1</span>
+          <h3 id="algorithm-title">Open-MOPD training loop</h3>
+        </header>
+
+        <div class="method-notation" aria-label="Method notation">
+          <p><code>s<sub>d</sub></code><span>The fraction of response tokens from domain d in the current batch.</span></p>
+          <p><code>m<sub>d</sub></code><span>The mean absolute token reward for domain d—a running measure of the remaining teacher–student gap.</span></p>
+        </div>
+
+        <ol class="algorithm-steps">
+          <li>
+            <h4>Roll out and route</h4>
+            <div class="algorithm-rule"><code>student rollout → routed teacher scores the student’s top 16 tokens</code><p>The student generates the response. Its known Math, Code, or IF label selects one frozen teacher, whose scores are cached once.</p></div>
+          </li>
+          <li>
+            <h4>Token-share balancing</h4>
+            <div class="algorithm-rule"><code>w<sub>d</sub><sup>share</sup> = (1/3) / s<sub>d</sub></code><p>If a domain supplies fewer response tokens, each of its tokens receives more weight. The weighted loss therefore assigns one third of its token budget to every domain.</p></div>
+          </li>
+          <li>
+            <h4>Gap-following allocation</h4>
+            <div class="algorithm-formulas">
+              <code>gap factor<sub>d</sub> = clip(m<sub>d</sub> / mean(m), 0.05, 20)</code>
+              <code>w<sub>d</sub> = normalize(w<sub>d</sub><sup>share</sup> × gap factor<sub>d</sub>)</code>
+            </div>
+            <p>Domains with more capability left to distill receive more budget. Normalization keeps the total batch-loss scale unchanged.</p>
+          </li>
+          <li class="algorithm-step-final">
+            <h4>Reward refresh and PPO update</h4>
+            <div class="algorithm-update-flow">
+              <div class="update-stage">
+                <span>Refresh token reward</span>
+                <code>r<sub>t</sub><sup>(k)</sup> = stopgrad(log p<sub>teacher</sub> − log p<sub>student</sub><sup>(k)</sup>) × p̃<sub>student</sub><sup>(k)</sup></code>
+              </div>
+              <span class="update-arrow" aria-hidden="true">→</span>
+              <div class="update-stage update-stage-weight">
+                <span>Apply the Step 3 domain weight</span>
+                <code>r<sub>t</sub><sup>(k)</sup> ← w<sub>d(x)</sub> × r<sub>t</sub><sup>(k)</sup></code>
+              </div>
+              <span class="update-arrow" aria-hidden="true">→</span>
+              <div class="update-stage">
+                <span>Update one shared student</span>
+                <code>PPO update</code>
+              </div>
+            </div>
+            <p>Before every inner update k, refresh the student-dependent reward, multiply every token by the final weight of its sample’s domain, and only then compute the PPO loss.</p>
+          </li>
+        </ol>
       </article>
     </section>
 
     <section id="results" class="content-section page-column results-section">
       <div class="section-heading">
         <h2>Results: 3.50 points → 0.31</h2>
-        <p>Open-MOPD is one shared student; RouteOPD and RouteRL are domain-routed, non-deployable references. Recovery is RouteRL headroom recovery, not accuracy.</p>
+        <p>We first isolate the contribution of each mechanism, then report detailed results for Math, Code, and Instruction Following, and finally present the complete cross-domain comparison.</p>
       </div>
 
-      <div class="table-wrap">
-        <table>
-          <caption>Main results: Total is the simple mean of the three domain macro-averages over AIME24/25, LiveCodeBench v5/v6, IFEval, and IFBenchtest.</caption>
-          <thead><tr><th>Method</th><th>Math</th><th>Code</th><th>IF</th><th>Total</th><th>Recovery</th></tr></thead>
-          <tbody>
-            <tr><td>Mixed SFT e4</td><td>17.95</td><td>17.60</td><td>41.46</td><td>25.67</td><td>—</td></tr>
-            <tr><td>Naive M-OPD</td><td>21.26</td><td>19.26</td><td>43.64</td><td>28.05</td><td>35.6%</td></tr>
-            <tr class="reference"><td>RouteOPD</td><td>23.15</td><td>21.71</td><td>49.80</td><td>31.55</td><td>88.0%</td></tr>
-            <tr class="ours"><td>Open-MOPD</td><td>22.42</td><td>21.73</td><td>49.58</td><td>31.24</td><td>83.4%</td></tr>
-            <tr class="reference"><td>RouteRL</td><td>24.24</td><td>21.73</td><td>51.08</td><td>32.35</td><td>100%</td></tr>
-          </tbody>
-        </table>
-        <p class="table-note">RouteOPD / RouteRL are true-label, domain-routed references; Open-MOPD is one shared student.</p>
-      </div>
+      <section class="results-block" aria-labelledby="ablation-title">
+        <h3 id="ablation-title">Ablation study</h3>
+        <p class="results-block-intro">Each row adds one mechanism to the setting directly above it. K is the number of PPO minibatch updates per rollout batch.</p>
+        <div class="table-wrap ablation-table">
+          <table>
+            <caption>From Naive M-OPD to the complete Open-MOPD recipe.</caption>
+            <thead><tr><th>Configuration</th><th>Share</th><th>Gap</th><th>Refresh</th><th>K</th><th>Math</th><th>Code</th><th>IF</th><th>Total</th><th>Δ</th></tr></thead>
+            <tbody>
+              <tr><td>Naive M-OPD</td><td>—</td><td>—</td><td>—</td><td>1</td><td>21.26</td><td>19.26</td><td>43.64</td><td>28.05</td><td>—</td></tr>
+              <tr><td>+ token-share</td><td>✓</td><td>—</td><td>—</td><td>1</td><td>20.55</td><td>19.57</td><td>47.53</td><td>29.22</td><td>+1.17</td></tr>
+              <tr><td>+ gap-following</td><td>✓</td><td>✓</td><td>—</td><td>1</td><td>21.00</td><td>19.31</td><td>49.50</td><td>29.94</td><td>+1.89</td></tr>
+              <tr class="reference"><td>Naive matched control</td><td>—</td><td>—</td><td>—</td><td>4</td><td>21.62</td><td>19.72</td><td>46.49</td><td>29.28</td><td>+1.23</td></tr>
+              <tr><td>+ share + gap</td><td>✓</td><td>✓</td><td>—</td><td>4</td><td>23.05</td><td>21.07</td><td>47.16</td><td>30.43</td><td>+2.38</td></tr>
+              <tr class="ours"><td>Open-MOPD</td><td>✓</td><td>✓</td><td>✓</td><td>4</td><td>22.42</td><td>21.73</td><td>49.58</td><td>31.24</td><td>+3.19</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-      <div class="table-wrap ablation-table">
+      <section class="results-block overall-results" aria-labelledby="overall-results-title">
+        <h3 id="overall-results-title">Complete results</h3>
+        <p class="results-block-intro">Total is the mean of the Math, Code, and IF domain averages. Recovery measures recovered RouteRL headroom relative to MixSFT e4.</p>
+        <div class="table-wrap overall-table">
         <table>
-          <caption>Ablation: Total and cumulative change from Naive M-OPD; K=4 rows use a matched-setting control.</caption>
-          <thead><tr><th>Configuration</th><th>K</th><th>Total</th><th>Δ</th></tr></thead>
+          <caption>Complete six-benchmark comparison on SmolLM3-3B.</caption>
+          <thead>
+            <tr><th rowspan="2">Method</th><th colspan="3">Math</th><th colspan="3">Code</th><th colspan="3">IF</th><th rowspan="2">Total</th><th rowspan="2">Recovery</th></tr>
+            <tr><th>AIME24</th><th>AIME25</th><th>Avg</th><th>LCB v5</th><th>LCB v6</th><th>Avg</th><th>IFEval</th><th>IFBench</th><th>Avg</th></tr>
+          </thead>
           <tbody>
-            <tr><td>Naive M-OPD</td><td>1</td><td>28.05</td><td>—</td></tr>
-            <tr><td>+ token-share</td><td>1</td><td>29.22</td><td>+1.17</td></tr>
-            <tr><td>+ gap-following</td><td>1</td><td>29.94</td><td>+1.89</td></tr>
-            <tr class="reference"><td>Naive matched control</td><td>4</td><td>29.28</td><td>+1.23</td></tr>
-            <tr><td>+ share + gap</td><td>4</td><td>30.43</td><td>+2.38</td></tr>
-            <tr class="ours"><td>Open-MOPD</td><td>4</td><td>31.24</td><td>+3.19</td></tr>
+            <tr><td>SmolLM3-3B-Base</td><td>2.08</td><td>1.72</td><td>1.90</td><td>3.41</td><td>6.17</td><td>4.79</td><td>16.08</td><td>13.00</td><td>14.54</td><td>7.08</td><td>—</td></tr>
+            <tr><td>MixSFT e4</td><td>15.63</td><td>20.26</td><td>17.95</td><td>15.99</td><td>19.20</td><td>17.60</td><td>66.91</td><td>16.00</td><td>41.46</td><td>25.67</td><td>—</td></tr>
+            <tr class="reference"><td>RouteRL</td><td>23.65</td><td>24.84</td><td>24.24</td><td>22.16</td><td>21.31</td><td>21.73</td><td>74.49</td><td>27.67</td><td>51.08</td><td>32.35</td><td>100%</td></tr>
+            <tr class="reference"><td>RouteOPD</td><td>22.34</td><td>23.96</td><td>23.15</td><td>22.28</td><td>21.14</td><td>21.71</td><td>75.60</td><td>24.00</td><td>49.80</td><td>31.55</td><td>88.0%</td></tr>
+            <tr><td>RFT</td><td>22.97</td><td>23.91</td><td>23.44</td><td>18.98</td><td>19.43</td><td>19.21</td><td>55.08</td><td>18.67</td><td>36.87</td><td>26.51</td><td>12.6%</td></tr>
+            <tr><td>MixRL</td><td>21.15</td><td>22.14</td><td>21.64</td><td>16.59</td><td>20.97</td><td>18.78</td><td>70.24</td><td>22.67</td><td>46.45</td><td>28.96</td><td>49.3%</td></tr>
+            <tr><td>ParamMerge-Avg</td><td>18.91</td><td>20.99</td><td>19.95</td><td>18.38</td><td>21.20</td><td>19.79</td><td>70.06</td><td>17.67</td><td>43.86</td><td>27.87</td><td>32.9%</td></tr>
+            <tr><td>ParamMerge-TA</td><td>21.93</td><td>22.76</td><td>22.34</td><td>21.74</td><td>23.14</td><td>22.44</td><td>71.53</td><td>21.67</td><td>46.60</td><td>30.46</td><td>71.7%</td></tr>
+            <tr><td>Naive M-OPD</td><td>20.92</td><td>21.60</td><td>21.26</td><td>17.53</td><td>20.99</td><td>19.26</td><td>68.61</td><td>18.67</td><td>43.64</td><td>28.05</td><td>35.6%</td></tr>
+            <tr class="ours"><td>Open-MOPD</td><td>21.98</td><td>22.86</td><td>22.42</td><td>20.84</td><td>22.63</td><td>21.73</td><td>74.49</td><td>24.67</td><td>49.58</td><td>31.24</td><td>83.4%</td></tr>
           </tbody>
         </table>
-      </div>
-      <p class="result-takeaway">Open-MOPD closes the integration gap from 3.50 to 0.31 points. Recovery rises from 35.6% to 83.4% relative to the RouteRL reference.</p>
+        </div>
+
+        <div class="table-wrap overall-table-mobile" aria-label="Compact complete results for mobile screens">
+          <table>
+            <thead><tr><th>Method</th><th>Math</th><th>Code</th><th>IF</th><th>Total</th><th>Recovery</th></tr></thead>
+            <tbody>
+              <tr><td>Base</td><td>1.90</td><td>4.79</td><td>14.54</td><td>7.08</td><td>—</td></tr>
+              <tr><td>MixSFT e4</td><td>17.95</td><td>17.60</td><td>41.46</td><td>25.67</td><td>—</td></tr>
+              <tr class="reference"><td>RouteRL</td><td>24.24</td><td>21.73</td><td>51.08</td><td>32.35</td><td>100%</td></tr>
+              <tr class="reference"><td>RouteOPD</td><td>23.15</td><td>21.71</td><td>49.80</td><td>31.55</td><td>88.0%</td></tr>
+              <tr><td>RFT</td><td>23.44</td><td>19.21</td><td>36.87</td><td>26.51</td><td>12.6%</td></tr>
+              <tr><td>MixRL</td><td>21.64</td><td>18.78</td><td>46.45</td><td>28.96</td><td>49.3%</td></tr>
+              <tr><td>Merge-Avg</td><td>19.95</td><td>19.79</td><td>43.86</td><td>27.87</td><td>32.9%</td></tr>
+              <tr><td>Merge-TA</td><td>22.34</td><td>22.44</td><td>46.60</td><td>30.46</td><td>71.7%</td></tr>
+              <tr><td>Naive M-OPD</td><td>21.26</td><td>19.26</td><td>43.64</td><td>28.05</td><td>35.6%</td></tr>
+              <tr class="ours"><td>Open-MOPD</td><td>22.42</td><td>21.73</td><td>49.58</td><td>31.24</td><td>83.4%</td></tr>
+            </tbody>
+          </table>
+        </div>
+          <p class="table-note">RouteRL and RouteOPD route each evaluation sample to a separate domain model and are not single deployable students.</p>
+      </section>
+
+      <p class="result-takeaway">Open-MOPD closes the integration gap from 3.50 to 0.31 points and raises RouteRL headroom recovery from 35.6% to 83.4% in one shared student.</p>
     </section>
 
     <section id="bibtex" class="content-section page-column paper-section">
       <div class="bibtex">
         <div class="bibtex-title">BibTeX</div>
-        <pre><code>@misc{openmopd2026,
-  title  = {Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation},
-  year   = {2026},
-  note   = {Review manuscript}
+        <pre><code>@article{gao2026openmopd,
+  title={Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation},
+  author={Gao, Huan-ang and Chi, Haohan and Yan, Yong and Feng, Shiyuan and Wu, Hanlin and Jiang, Zheng and He, Bingxiang and Ma, Wei-Ying and Zhang, Ya-Qin and Zhou, Hao},
+  journal={arXiv preprint},
+  year={2026}
 }</code></pre>
       </div>
     </section>

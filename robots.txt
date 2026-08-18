@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bytedtsinghua-sia.github.io/Open-MOPD/sitemap.xml
