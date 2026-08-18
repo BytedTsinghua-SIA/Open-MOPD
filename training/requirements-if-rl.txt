@@ -1,0 +1,8 @@
+# Instruction-following RL runtime deps (installed by training/install_requirements.sh).
+#
+# verifiable-instructions is vendored under third_party/verifiable-instructions/
+# and installed editable by install_requirements.sh.
+nltk>=3.8
+langdetect>=1.0.9
+absl-py>=1.0.0
+immutabledict>=2.0.0

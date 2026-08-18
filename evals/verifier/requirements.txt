@@ -1,0 +1,10 @@
+absl-py
+appdirs
+emoji
+immutabledict
+jsonlines
+langdetect
+nltk
+syllapy
+tempdir
+wget

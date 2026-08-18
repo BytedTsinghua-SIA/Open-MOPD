@@ -1,0 +1,4 @@
+nltk>=3.8
+langdetect>=1.0.9
+absl-py>=1.0.0
+immutabledict>=2.0.0
