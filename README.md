@@ -20,6 +20,9 @@
 </p>
 
 <p align="center">
+  <a href="https://arxiv.org/abs/2608.19098">
+    <img src="https://img.shields.io/badge/arXiv-2608.19098-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white" alt="arXiv">
+  </a>
   <a href="https://bytedtsinghua-sia.github.io/Open-MOPD/">
     <img src="https://img.shields.io/badge/Project-Page-0A8AA0?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Project Page">
   </a>
@@ -143,7 +146,7 @@ scheduler, stage remote files, or publish artifacts automatically.
 @article{gao2026openmopd,
   title  = {Open-MOPD: Diagnosing and Fixing Capability Imbalance in Multi-Teacher On-Policy Distillation},
   author = {Gao, Huan-ang and Chi, Haohan and Yan, Yong and Feng, Shiyuan and Wu, Hanlin and Jiang, Zheng and He, Bingxiang and Ma, Wei-Ying and Zhang, Ya-Qin and Zhou, Hao},
-  journal = {arXiv preprint},
+  journal = {arXiv preprint arXiv:2608.19098},
   year   = {2026}
 }
 ```
